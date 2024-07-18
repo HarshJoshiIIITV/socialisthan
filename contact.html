@@ -84,25 +84,25 @@
                 Request A Call back
               </h2>
             </div>
-            <form action="">
+            <div>
               <div>
-                <input type="text" placeholder="Full Name " />
+                <input type="text" id="name" placeholder="Full Name " />
               </div>
               <div>
-                <input type="email" placeholder="Email" />
+                <input type="email" id="email"  placeholder="Email" />
               </div>
               <div>
-                <input type="text" placeholder="Phone number" />
+                <input type="text"  id="mobileno"  placeholder="Phone number" />
               </div>
               <div>
-                <input type="text" class="message-box" placeholder="Message" />
+                <input type="text" class="message-box" id="message" placeholder="Message" />
               </div>
               <div class="d-flex ">
-                <button>
+                <button onclick=sendMail()>
                   SEND
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
         <!-- <div class="col-md-6 col-lg-7 px-0">
@@ -218,7 +218,50 @@
     </footer>
     <!-- footer section -->
   </div>
-
+  <script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+</script>
+  <script>
+    
+    function sendMail() {
+      const name= document.getElementById("name").value;
+      const email= document.getElementById("email").value;
+      const mobileno= document.getElementById("mobileno").value;
+      const message= document.getElementById("message").value;
+      if(!name || !mobileno || !message){
+        document.getElementById("feedbackmessage").innerHTML='PLEASE FILL ALL MANDATORY DETAILS'
+        document.getElementById("feedbackmessage").style.color='red'
+        return ;
+      }
+    var params = {
+      name,email,mobileno,message
+    };
+    const serviceID = "service_l1oqtzf";
+    const templateID = "template_b14pfks";
+      emailjs.send(serviceID, templateID, params)
+      .then(res=>{
+          document.getElementById("name").value = "";
+          document.getElementById("email").value = "";
+          document.getElementById("mobileno").value = "";
+          document.getElementById("sport").value = "";
+          document.getElementById("teamOrNot").value = "";
+          document.getElementById("feedbackmessage").innerHTML='Thank you for contacting us. We will be in touch with you very soon.'
+        document.getElementById("feedbackmessage").style.color='green'
+        setTimeout(() => {
+          document.getElementById("feedbackmessage").innerHTML=''
+          document.getElementById("feedbackmessage").style.color=''
+        }, 5000);
+  
+      })
+      .catch(err=>console.log(err));
+  }
+  </script>
+  
+  <script type="text/javascript">
+  (function(){
+  emailjs.init("jp12Ifpu4thHtykCg");
+  })();
+  </script>
   <!-- jQery -->
   <script src="js/jquery-3.4.1.min.js"></script>
   <!-- popper js -->
